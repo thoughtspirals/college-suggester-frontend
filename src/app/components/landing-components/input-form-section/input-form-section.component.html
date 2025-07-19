@@ -1,0 +1,102 @@
+<section id="form-section" class="py-5 bg-white border-top">
+  <div class="container">
+    <h2 class="text-center mb-4 fw-semibold">Find Your Best Fit Colleges</h2>
+    <form
+      class="row g-3 justify-content-center"
+      (ngSubmit)="submit()"
+      #collegeForm="ngForm"
+    >
+      <div class="d-flex flex-wrap justify-content-center gap-3">
+        <div class="col-md-2">
+          <label for="score" class="form-label">CET Rank</label>
+          <input
+            type="number"
+            class="form-control"
+            id="score"
+            name="rank"
+            [(ngModel)]="form.rank"
+            placeholder="Enter your rank"
+            min="1"
+          />
+        </div>
+
+        <div class="col-md-2">
+          <label for="gender" class="form-label">Gender</label>
+          <select
+            class="form-select"
+            id="gender"
+            name="gender"
+            [(ngModel)]="form.gender"
+          >
+            <option selected disabled value="">Select Gender</option>
+            <option>Male</option>
+            <option>Female</option>
+          </select>
+        </div>
+
+        <div class="col-md-2">
+          <label for="caste" class="form-label">Category</label>
+          <select
+            class="form-select"
+            id="caste"
+            name="caste"
+            [(ngModel)]="form.caste"
+          >
+            <option selected disabled value="">Choose category</option>
+            <option>OPEN</option>
+            <option>SC</option>
+            <option>ST</option>
+            <option>OBC</option>
+            <option>EWS</option>
+            <option>NT1</option>
+            <option>NT2</option>
+            <option>NT3</option>
+            <option>SBC</option>
+            <option>SEBC</option>
+            <option>VJ</option>
+          </select>
+        </div>
+
+        <div class="col-md-2">
+          <label for="special_reservation" class="form-label"
+            >Special Reservation</label
+          >
+          <select
+            class="form-select"
+            id="special_reservation"
+            name="special_reservation"
+            [(ngModel)]="form.special_reservation"
+          >
+            <option selected disabled value="">Choose Reservation Type</option>
+            <option>PWD</option>
+            <option>DEFENCE</option>
+            <option>ORPHAN</option>
+            <option>TFWS</option>
+          </select>
+        </div>
+
+        <div class="col-md-2">
+          <label for="seat_type" class="form-label">Seat Type</label>
+          <select
+            class="form-select"
+            id="seat_type"
+            name="seat_type"
+            [(ngModel)]="form.seat_type"
+          >
+            <option selected disabled value="">Select Seat Type</option>
+            <option>Home</option>
+            <option>Other</option>
+            <option>State</option>
+            <option>All India</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="col-12 text-center mt-4">
+        <button type="submit" class="btn btn-primary px-4">
+          Get College Suggestions
+        </button>
+      </div>
+    </form>
+  </div>
+</section>

@@ -1,0 +1,126 @@
+<div class="filter-panel-container">
+  <form
+    class="filter-panel-form"
+    #f="ngForm"
+    (ngSubmit)="applyFilters(f)"
+    novalidate
+  >
+    <!-- Filter Fields Grid -->
+    <div class="filter-fields-grid">
+      <!-- CET Rank -->
+      <div class="filter-field">
+        <label for="score" class="form-label">CET Rank</label>
+        <input
+          type="number"
+          class="form-control"
+          id="score"
+          name="rank"
+          [(ngModel)]="form.rank"
+          placeholder="Enter your rank"
+          min="1"
+        />
+      </div>
+
+      <!-- Gender -->
+      <div class="filter-field">
+        <label for="gender" class="form-label">Gender</label>
+        <select
+          class="form-select"
+          id="gender"
+          name="gender"
+          [(ngModel)]="form.gender"
+        >
+          <option selected disabled value="">Select Gender</option>
+          <option>Male</option>
+          <option>Female</option>
+        </select>
+      </div>
+
+      <!-- Category -->
+      <div class="filter-field">
+        <label for="caste" class="form-label">Category</label>
+        <select
+          class="form-select"
+          id="caste"
+          name="caste"
+          [(ngModel)]="form.caste"
+        >
+          <option selected disabled value="">Choose category</option>
+          <option>OPEN</option>
+          <option>SC</option>
+          <option>ST</option>
+          <option>OBC</option>
+          <option>EWS</option>
+          <option>NT1</option>
+          <option>NT2</option>
+          <option>NT3</option>
+          <option>SBC</option>
+          <option>SEBC</option>
+          <option>VJ</option>
+        </select>
+      </div>
+
+      <!-- Special Reservation -->
+      <div class="filter-field">
+        <label for="special_reservation" class="form-label">
+          Special Reservation
+        </label>
+        <select
+          class="form-select"
+          id="special_reservation"
+          name="special_reservation"
+          [(ngModel)]="form.special_reservation"
+        >
+          <option selected disabled value="">Choose Reservation Type</option>
+          <option>PWD</option>
+          <option>DEFENCE</option>
+          <option>ORPHAN</option>
+          <option>TFWS</option>
+        </select>
+      </div>
+
+      <!-- Seat Type -->
+      <div class="filter-field">
+        <label for="seat_type" class="form-label">Seat Type</label>
+        <select
+          class="form-select"
+          id="seat_type"
+          name="seat_type"
+          [(ngModel)]="form.seat_type"
+        >
+          <option selected disabled value="">Select Seat Type</option>
+          <option>Home</option>
+          <option>Other</option>
+          <option>State</option>
+          <option>All India</option>
+        </select>
+      </div>
+
+      <!-- Branch -->
+      <div class="filter-field branch-field">
+        <label for="branch" class="form-label">Branch</label>
+        <ng-select
+          [items]="branches"
+          bindLabel="this"
+          [(ngModel)]="form.branch"
+          name="branch"
+          [searchable]="true"
+          [clearable]="true"
+          [dropdownPosition]="'auto'"
+        >
+        </ng-select>
+      </div>
+    </div>
+
+    <!-- Apply Filters Button -->
+    <div class="filter-actions mt-3 text-end">
+      <button
+        type="submit"
+        class="btn btn-danger apply-filters-btn"
+        [disabled]="f.invalid"
+      >
+        <i class="fas fa-filter me-2"></i>Apply Filters
+      </button>
+    </div>
+  </form>
+</div>

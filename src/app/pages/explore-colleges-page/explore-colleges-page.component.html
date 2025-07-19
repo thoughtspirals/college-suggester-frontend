@@ -1,0 +1,23 @@
+<div class="container py-4">
+  <h2 class="text-center mb-2 fw-bold text-primary">Explore Colleges</h2>
+  <p class="text-center text-muted mb-4 fs-5">
+    Enter your details to discover the best colleges and branches based on your
+    CET score.
+  </p>
+
+  <!-- Informative Card -->
+  <div class="alert alert-info shadow-sm text-center mb-4" role="alert">
+    Simply choose your <strong>Category</strong>, <strong>Region</strong>,
+    <strong>Preferred Branch</strong> and enter your <strong>Score</strong>.
+    <br />
+    We’ll instantly filter and show you colleges where you have a strong chance
+    of admission — using official MHT-CET data.
+  </div>
+
+  <!-- Filters and Table -->
+  <app-filter-panel
+    (filtersChanged)="fetchFilteredColleges($event)"
+  ></app-filter-panel>
+
+  <app-college-table [colleges]="filteredColleges"></app-college-table>
+</div>

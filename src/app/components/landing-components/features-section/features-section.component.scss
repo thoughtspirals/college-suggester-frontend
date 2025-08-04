@@ -1,0 +1,9 @@
+.card {
+  transition: transform 0.3s ease, box-shadow 0.3s ease, border 0.3s ease;
+
+  &:hover {
+    border: 1px solid #dc3545; // Bootstrap 'danger' red
+    box-shadow: 0 10px 25px rgba(220, 53, 69, 0.3);
+    transform: translateY(-5px);
+  }
+}

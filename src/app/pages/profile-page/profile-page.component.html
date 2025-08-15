@@ -1,0 +1,205 @@
+<!-- Profile Page -->
+<div class="profile-container">
+  <div class="profile-header">
+    <h1>My Profile</h1>
+    <p *ngIf="currentUser">Welcome back, {{ currentUser.full_name }}!</p>
+  </div>
+
+  <!-- Loading State -->
+  <div *ngIf="loading" class="loading-container">
+    <div class="spinner"></div>
+    <p>Loading profile...</p>
+  </div>
+
+  <!-- Profile Content -->
+  <div *ngIf="!loading && currentUser" class="profile-content">
+    <!-- User Info Card -->
+    <div class="info-card">
+      <h2>Account Information</h2>
+      <div class="info-grid">
+        <div class="info-item">
+          <label>Email:</label>
+          <span>{{ currentUser.email }}</span>
+        </div>
+        <div class="info-item">
+          <label>Full Name:</label>
+          <span>{{ currentUser.full_name }}</span>
+        </div>
+        <div class="info-item">
+          <label>Phone:</label>
+          <span>{{ currentUser.phone || 'Not provided' }}</span>
+        </div>
+        <div class="info-item">
+          <label>Account Status:</label>
+          <span class="status" [ngClass]="{ 'active': currentUser.is_active, 'inactive': !currentUser.is_active }">
+            {{ currentUser.is_active ? 'Active' : 'Inactive' }}
+          </span>
+        </div>
+        <div class="info-item">
+          <label>Email Verified:</label>
+          <span class="status" [ngClass]="{ 'verified': currentUser.is_verified, 'unverified': !currentUser.is_verified }">
+            {{ currentUser.is_verified ? 'Verified' : 'Not Verified' }}
+          </span>
+        </div>
+        <div class="info-item">
+          <label>Roles:</label>
+          <span>{{ currentUser.roles.join(', ') || 'No roles assigned' }}</span>
+        </div>
+        <div class="info-item">
+          <label>Login Count:</label>
+          <span>{{ currentUser.login_count }}</span>
+        </div>
+        <div class="info-item">
+          <label>Member Since:</label>
+          <span>{{ currentUser.created_at | date:'mediumDate' }}</span>
+        </div>
+        <div class="info-item" *ngIf="currentUser.last_login">
+          <label>Last Login:</label>
+          <span>{{ currentUser.last_login | date:'short' }}</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Edit Profile Form -->
+    <div class="form-card">
+      <h2>Edit Profile</h2>
+      
+      <div *ngIf="message" class="success-message">
+        {{ message }}
+      </div>
+      <div *ngIf="error" class="error-message">
+        {{ error }}
+      </div>
+
+      <form [formGroup]="profileForm" (ngSubmit)="onUpdateProfile()">
+        <div class="form-group">
+          <label for="email">Email Address *</label>
+          <input
+            type="email"
+            id="email"
+            formControlName="email"
+            class="form-control"
+            [class.error]="email?.invalid && email?.touched"
+          />
+          <div *ngIf="email?.invalid && email?.touched" class="field-error">
+            <span *ngIf="email?.hasError('required')">Email is required</span>
+            <span *ngIf="email?.hasError('email')">Please enter a valid email address</span>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="full_name">Full Name *</label>
+          <input
+            type="text"
+            id="full_name"
+            formControlName="full_name"
+            class="form-control"
+            [class.error]="full_name?.invalid && full_name?.touched"
+          />
+          <div *ngIf="full_name?.invalid && full_name?.touched" class="field-error">
+            <span *ngIf="full_name?.hasError('required')">Full name is required</span>
+            <span *ngIf="full_name?.hasError('minlength')">Full name must be at least 2 characters</span>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="phone">Phone Number</label>
+          <input
+            type="tel"
+            id="phone"
+            formControlName="phone"
+            class="form-control"
+            placeholder="Optional"
+          />
+        </div>
+
+        <div class="form-actions">
+          <button
+            type="submit"
+            class="btn btn-primary"
+            [disabled]="updating || profileForm.invalid"
+          >
+            <span *ngIf="updating" class="spinner-small"></span>
+            {{ updating ? 'Updating...' : 'Update Profile' }}
+          </button>
+        </div>
+      </form>
+    </div>
+
+    <!-- Change Password Form -->
+    <div class="form-card">
+      <h2>Change Password</h2>
+      
+      <div *ngIf="passwordMessage" class="success-message">
+        {{ passwordMessage }}
+      </div>
+      <div *ngIf="passwordError" class="error-message">
+        {{ passwordError }}
+      </div>
+
+      <form [formGroup]="passwordForm" (ngSubmit)="onChangePassword()">
+        <div class="form-group">
+          <label for="current_password">Current Password *</label>
+          <input
+            type="password"
+            id="current_password"
+            formControlName="current_password"
+            class="form-control"
+            [class.error]="current_password?.invalid && current_password?.touched"
+          />
+          <div *ngIf="current_password?.invalid && current_password?.touched" class="field-error">
+            <span *ngIf="current_password?.hasError('required')">Current password is required</span>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="new_password">New Password *</label>
+          <input
+            type="password"
+            id="new_password"
+            formControlName="new_password"
+            class="form-control"
+            [class.error]="new_password?.invalid && new_password?.touched"
+          />
+          <div *ngIf="new_password?.invalid && new_password?.touched" class="field-error">
+            <span *ngIf="new_password?.hasError('required')">New password is required</span>
+            <span *ngIf="new_password?.hasError('minlength')">Password must be at least 8 characters</span>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="confirm_password">Confirm New Password *</label>
+          <input
+            type="password"
+            id="confirm_password"
+            formControlName="confirm_password"
+            class="form-control"
+            [class.error]="confirm_password?.invalid && confirm_password?.touched"
+          />
+          <div *ngIf="confirm_password?.invalid && confirm_password?.touched" class="field-error">
+            <span *ngIf="confirm_password?.hasError('required')">Please confirm your password</span>
+            <span *ngIf="confirm_password?.hasError('passwordMismatch')">Passwords do not match</span>
+          </div>
+        </div>
+
+        <div class="form-actions">
+          <button
+            type="submit"
+            class="btn btn-secondary"
+            [disabled]="changingPassword || passwordForm.invalid"
+          >
+            <span *ngIf="changingPassword" class="spinner-small"></span>
+            {{ changingPassword ? 'Changing...' : 'Change Password' }}
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- Error State -->
+  <div *ngIf="!loading && !currentUser && error" class="error-container">
+    <h2>Error Loading Profile</h2>
+    <p>{{ error }}</p>
+    <button class="btn btn-primary" (click)="loadUserProfile()">Retry</button>
+  </div>
+</div>

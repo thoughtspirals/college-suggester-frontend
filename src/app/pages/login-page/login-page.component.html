@@ -37,8 +37,8 @@
         </div>
         <div
           *ngIf="
-            loginForm.get('identifier')?.touched &&
-            loginForm.get('identifier')?.invalid
+            identifier?.touched &&
+            identifier?.invalid
           "
           class="text-danger small mt-1"
         >
@@ -71,12 +71,12 @@
         </div>
         <div
           *ngIf="
-            loginForm.get('password')?.touched &&
-            loginForm.get('password')?.invalid
+            password?.touched &&
+            password?.invalid
           "
           class="text-danger small mt-1"
         >
-          Minimum 6 characters required.
+          Minimum 8 characters required.
         </div>
       </div>
 

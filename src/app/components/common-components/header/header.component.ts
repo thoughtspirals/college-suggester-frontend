@@ -1,6 +1,7 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Router, RouterModule } from '@angular/router';
+import { AuthService, UserResponse } from '../../../services/auth.service';
 
 @Component({
   selector: 'app-header',
@@ -9,17 +10,22 @@ import { Router, RouterModule } from '@angular/router';
   templateUrl: './header.component.html',
   styleUrls: ['./header.component.scss'],
 })
-export class HeaderComponent {
-  constructor(private router: Router) {} // Inject Router
-  isAuthenticated = false; // Simulates whether user is logged in
+export class HeaderComponent implements OnInit {
+  isAuthenticated = false;
 
-  onLogin(): void {
-    console.log('Navigating to /login');
-    this.router.navigate(['/login']);
+  constructor(
+    private router: Router,
+    private authService: AuthService
+  ) {}
+
+  ngOnInit(): void {
+    // Subscribe to authentication state changes
+    this.authService.currentUser$.subscribe((user: UserResponse | null) => {
+      this.isAuthenticated = !!user;
+    });
   }
 
   onLogout() {
-    this.isAuthenticated = false;
-    console.log('User logged out');
+    this.authService.logout();
   }
 }

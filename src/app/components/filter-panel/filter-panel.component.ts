@@ -33,7 +33,7 @@ export class FilterPanelComponent implements OnInit {
 
   loadBranches(): void {
     this.http
-      .get<string[]>('http://127.0.0.1:8000/available-branches')
+      .get<string[]>('http://127.0.0.1:8000/api/v1/available-branches')
       .subscribe({
         next: (data) => {
           console.log('Branches data:', data); // Debug log

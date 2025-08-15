@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 @Component({
   selector: 'app-input-form-section',
+  standalone: true,
   imports: [CommonModule, FormsModule],
   templateUrl: './input-form-section.component.html',
   styleUrl: './input-form-section.component.scss',

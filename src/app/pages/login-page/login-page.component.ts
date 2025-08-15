@@ -7,6 +7,7 @@ import {
   Validators,
 } from '@angular/forms';
 import { RouterModule, Router } from '@angular/router';
+import { AuthService, LoginRequest } from '../../services/auth.service';
 
 @Component({
   selector: 'app-login-page',
@@ -18,8 +19,14 @@ import { RouterModule, Router } from '@angular/router';
 export class LoginPageComponent {
   loginForm: FormGroup;
   hidePassword = true;
+  loading = false;
+  errorMessage = '';
 
-  constructor(private fb: FormBuilder, private router: Router) {
+  constructor(
+    private fb: FormBuilder, 
+    private router: Router,
+    private authService: AuthService
+  ) {
     this.loginForm = this.fb.group({
       identifier: ['', [Validators.required]],
       password: ['', [Validators.required, Validators.minLength(8)]],
@@ -28,9 +35,41 @@ export class LoginPageComponent {
 
   onSubmit(): void {
     if (this.loginForm.valid) {
-      console.log(this.loginForm.value);
-      // Add API call here
-      this.router.navigate(['/']); // Redirect on login
+      this.loading = true;
+      this.errorMessage = '';
+      
+      const loginRequest: LoginRequest = {
+        email: this.loginForm.get('identifier')?.value,
+        password: this.loginForm.get('password')?.value
+      };
+
+      this.authService.login(loginRequest).subscribe({
+        next: (response) => {
+          console.log('Login successful:', response);
+          this.router.navigate(['/']); // Redirect on login
+        },
+        error: (error) => {
+          console.error('Login error:', error);
+          this.errorMessage = error.message || 'Login failed. Please try again.';
+          this.loading = false;
+        },
+        complete: () => {
+          this.loading = false;
+        }
+      });
+    } else {
+      // Mark all fields as touched to show validation errors
+      Object.keys(this.loginForm.controls).forEach(key => {
+        this.loginForm.get(key)?.markAsTouched();
+      });
     }
+  }
+
+  get identifier() {
+    return this.loginForm.get('identifier');
+  }
+
+  get password() {
+    return this.loginForm.get('password');
   }
 }

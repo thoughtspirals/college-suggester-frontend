@@ -59,7 +59,7 @@ export class CollegeService {
     caste: string;
     gender: string;
     seat_type: string;
-    special_reservation?: string;
+    special_reservation?: string | null;
     limit?: number;
   }): Observable<CollegeSuggestion[]> {
     let httpParams = new HttpParams()
@@ -68,8 +68,8 @@ export class CollegeService {
       .set('gender', params.gender)
       .set('seat_type', params.seat_type);
 
-    if (params.special_reservation) {
-      httpParams = httpParams.set('special_reservation', params.special_reservation);
+    if (params.special_reservation !== undefined) {
+      httpParams = httpParams.set('special_reservation', params.special_reservation || '');
     }
 
     if (params.limit) {
@@ -90,7 +90,7 @@ export class CollegeService {
     caste: string;
     gender: string;
     seat_type: string;
-    special_reservation?: string;
+    special_reservation?: string | null;
     college_name?: string;
     branch?: string;
     limit?: number;
@@ -101,8 +101,8 @@ export class CollegeService {
       .set('gender', params.gender)
       .set('seat_type', params.seat_type);
 
-    if (params.special_reservation) {
-      httpParams = httpParams.set('special_reservation', params.special_reservation);
+    if (params.special_reservation !== undefined) {
+      httpParams = httpParams.set('special_reservation', params.special_reservation || '');
     }
     if (params.college_name) {
       httpParams = httpParams.set('college_name', params.college_name);

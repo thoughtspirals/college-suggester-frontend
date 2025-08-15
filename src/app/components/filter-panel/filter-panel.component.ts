@@ -19,7 +19,7 @@ export class FilterPanelComponent implements OnInit {
     caste: '',
     gender: '',
     seat_type: '',
-    special_reservation: '',
+    special_reservation: '' as string | null,
     branch: '',
   };
 
@@ -45,6 +45,15 @@ export class FilterPanelComponent implements OnInit {
 
   applyFilters(f: NgForm) {
     if (f.invalid) return;
-    this.filtersChanged.emit(this.form);
+    
+    // Create a copy of the form data to modify
+    const formData = { ...this.form };
+    
+    // Convert "null" string to actual null for special_reservation
+    if (formData.special_reservation === 'null') {
+      formData.special_reservation = null;
+    }
+    
+    this.filtersChanged.emit(formData);
   }
 }

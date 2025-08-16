@@ -44,7 +44,10 @@ export class CollegeService {
     console.error('College service error:', error);
     let errorMessage = 'An unknown error occurred';
     
-    if (error.error?.detail) {
+    // Handle specific error cases
+    if (error.status === 401 || error.status === 403) {
+      errorMessage = 'Login required';
+    } else if (error.error?.detail) {
       errorMessage = error.error.detail;
     } else if (error.message) {
       errorMessage = error.message;

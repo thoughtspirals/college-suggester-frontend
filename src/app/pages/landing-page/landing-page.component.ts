@@ -40,7 +40,8 @@ export class LandingPageComponent {
         this.loading = false;
       },
       error: (err) => {
-        this.error = err?.error?.detail || 'Something went wrong';
+        // The error message from the service will now include 'Login required' for 401/403 errors
+        this.error = err?.message || err?.error?.detail || 'Something went wrong';
         this.loading = false;
         this.suggestions = [];
       },

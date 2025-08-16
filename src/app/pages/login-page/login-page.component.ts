@@ -28,7 +28,7 @@ export class LoginPageComponent {
     private authService: AuthService
   ) {
     this.loginForm = this.fb.group({
-      identifier: ['', [Validators.required]],
+      email: ['', [Validators.required, Validators.email]],
       password: ['', [Validators.required, Validators.minLength(8)]],
     });
   }
@@ -39,7 +39,7 @@ export class LoginPageComponent {
       this.errorMessage = '';
       
       const loginRequest: LoginRequest = {
-        email: this.loginForm.get('identifier')?.value,
+        email: this.loginForm.get('email')?.value,
         password: this.loginForm.get('password')?.value
       };
 
@@ -65,8 +65,8 @@ export class LoginPageComponent {
     }
   }
 
-  get identifier() {
-    return this.loginForm.get('identifier');
+  get email() {
+    return this.loginForm.get('email');
   }
 
   get password() {

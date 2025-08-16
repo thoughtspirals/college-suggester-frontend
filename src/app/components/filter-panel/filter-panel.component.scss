@@ -2,9 +2,22 @@
   .filter-panel-form {
     .filter-fields-grid {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      grid-template-columns: 1fr;
       gap: 16px;
       margin-bottom: 16px;
+      
+      // Responsive breakpoints
+      @media (min-width: 576px) {
+        grid-template-columns: repeat(2, 1fr);
+      }
+      
+      @media (min-width: 768px) {
+        grid-template-columns: repeat(3, 1fr);
+      }
+      
+      @media (min-width: 1200px) {
+        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      }
     }
 
     .filter-field {
@@ -19,12 +32,19 @@
     }
 
     .apply-filters-btn {
-      padding: 8px 16px;
+      padding: 12px 24px;
       font-size: 16px;
       display: flex;
       align-items: center;
       justify-content: center;
       gap: 8px;
+      min-height: 44px; // Better touch target for mobile
+      width: 100%;
+      
+      @media (min-width: 768px) {
+        width: auto;
+        padding: 8px 16px;
+      }
     }
   }
 }

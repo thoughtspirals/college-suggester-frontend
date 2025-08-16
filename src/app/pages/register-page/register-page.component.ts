@@ -72,6 +72,7 @@ export class RegisterPageComponent {
       next: (response) => {
         console.log('Registration successful:', response);
         this.successMessage = 'Registration successful! Please login to continue.';
+        this.loading = false;
         
         // Redirect to login after 2 seconds
         setTimeout(() => {
@@ -81,9 +82,6 @@ export class RegisterPageComponent {
       error: (error) => {
         console.error('Registration error:', error);
         this.errorMessage = error.message || 'Registration failed. Please try again.';
-        this.loading = false;
-      },
-      complete: () => {
         this.loading = false;
       }
     });

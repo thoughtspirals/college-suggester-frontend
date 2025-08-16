@@ -19,5 +19,17 @@
     (filtersChanged)="fetchFilteredColleges($event)"
   ></app-filter-panel>
 
-  <app-college-table [colleges]="filteredColleges"></app-college-table>
+  <!-- Loading Indicator -->
+  <div *ngIf="loading" class="text-center my-4">
+    <div class="spinner-border text-primary" role="status">
+      <span class="visually-hidden">Loading...</span>
+    </div>
+  </div>
+
+  <!-- Error Display -->
+  <div *ngIf="error" class="alert alert-danger text-center mt-3">
+    {{ error }}
+  </div>
+
+  <app-college-table *ngIf="!loading && !error" [colleges]="filteredColleges"></app-college-table>
 </div>

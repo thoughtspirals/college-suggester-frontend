@@ -162,14 +162,13 @@ export class AuthService {
   private handleError(error: any) {
     console.error('Auth service error:', error);
     
-    // If token is invalid, clear auth
-    if (error.status === 401) {
-      this.clearAuth();
-    }
-
     let errorMessage = 'An unknown error occurred';
     
-    if (error.error?.detail) {
+    // Handle specific error cases
+    if (error.status === 401 || error.status === 403) {
+      this.clearAuth();
+      errorMessage = 'Login required';
+    } else if (error.error?.detail) {
       errorMessage = error.error.detail;
     } else if (error.message) {
       errorMessage = error.message;

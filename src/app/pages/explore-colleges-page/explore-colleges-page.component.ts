@@ -39,6 +39,7 @@ export class ExplorePageComponent {
       },
       error: (err) => {
         console.error('Failed to fetch filtered colleges', err);
+        // The error message from the service will now include 'Login required' for 401/403 errors
         this.error = err.message || 'Failed to fetch colleges';
         this.filteredColleges = [];
         this.loading = false;

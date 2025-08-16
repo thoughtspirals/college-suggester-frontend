@@ -1,0 +1,28 @@
+// Mobile-first responsive styling
+.form-control, .form-select {
+  min-height: 44px; // Better touch targets on mobile
+  font-size: 16px; // Prevents zoom on iOS when font-size is less than 16px
+}
+
+.btn {
+  min-height: 44px;
+  padding: 12px 24px;
+  font-size: 16px;
+  
+  @media (min-width: 768px) {
+    padding: 8px 16px;
+  }
+}
+
+// Ensure proper spacing on mobile
+@media (max-width: 767px) {
+  .container {
+    padding-left: 15px;
+    padding-right: 15px;
+  }
+  
+  h2 {
+    font-size: 1.5rem;
+    margin-bottom: 2rem;
+  }
+}

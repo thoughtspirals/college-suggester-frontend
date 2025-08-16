@@ -18,31 +18,32 @@
     </div>
 
     <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
-      <!-- Email or Phone -->
+      <!-- Email -->
       <div class="mb-3">
-        <label for="identifier" class="form-label fw-semibold"
-          >Email or Phone</label
+        <label for="email" class="form-label fw-semibold"
+          >Email Address</label
         >
         <div class="input-group">
           <span class="input-group-text"
-            ><i class="bi bi-person-fill"></i
+            ><i class="bi bi-envelope-fill"></i
           ></span>
           <input
-            type="text"
-            id="identifier"
+            type="email"
+            id="email"
             class="form-control"
-            formControlName="identifier"
-            placeholder="example@gmail.com or 9876543210"
+            formControlName="email"
+            placeholder="example@gmail.com"
           />
         </div>
         <div
           *ngIf="
-            identifier?.touched &&
-            identifier?.invalid
+            email?.touched &&
+            email?.invalid
           "
           class="text-danger small mt-1"
         >
-          This field is required.
+          <span *ngIf="email?.errors?.['required']">Email is required.</span>
+          <span *ngIf="email?.errors?.['email']">Please enter a valid email address.</span>
         </div>
       </div>
 

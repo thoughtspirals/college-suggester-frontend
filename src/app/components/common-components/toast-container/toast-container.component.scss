@@ -1,0 +1,51 @@
+/* Custom toast styles */
+.toast-container {
+  .toast {
+    min-width: 300px;
+    margin-bottom: 0.5rem;
+    
+    &.text-bg-success {
+      .toast-header {
+        background-color: rgba(25, 135, 84, 0.1);
+        border-bottom: 1px solid rgba(25, 135, 84, 0.2);
+      }
+    }
+    
+    &.text-bg-danger {
+      .toast-header {
+        background-color: rgba(220, 53, 69, 0.1);
+        border-bottom: 1px solid rgba(220, 53, 69, 0.2);
+      }
+    }
+    
+    &.text-bg-warning {
+      .toast-header {
+        background-color: rgba(255, 193, 7, 0.1);
+        border-bottom: 1px solid rgba(255, 193, 7, 0.2);
+      }
+    }
+    
+    &.text-bg-info {
+      .toast-header {
+        background-color: rgba(13, 202, 240, 0.1);
+        border-bottom: 1px solid rgba(13, 202, 240, 0.2);
+      }
+    }
+  }
+}
+
+/* Animation for toast entrance */
+.toast {
+  animation: slideInRight 0.3s ease-out;
+}
+
+@keyframes slideInRight {
+  from {
+    transform: translateX(100%);
+    opacity: 0;
+  }
+  to {
+    transform: translateX(0);
+    opacity: 1;
+  }
+}

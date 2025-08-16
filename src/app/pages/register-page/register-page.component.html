@@ -58,7 +58,7 @@
 
       <!-- Phone -->
       <div class="mb-3">
-        <label class="form-label fw-semibold">Mobile Number</label>
+        <label class="form-label fw-semibold">Mobile Number (Optional)</label>
         <div class="input-group">
           <span class="input-group-text"
             ><i class="bi bi-telephone-fill"></i
@@ -66,10 +66,9 @@
           <input
             type="tel"
             class="form-control"
-            required
             [(ngModel)]="phone"
             name="phone"
-            pattern="[0-9]{10}"
+            pattern="[0-9]{10,}"
             placeholder="10-digit mobile number"
           />
         </div>
@@ -108,13 +107,26 @@
         </div>
       </div>
 
+      <!-- Error Message -->
+      <div *ngIf="errorMessage" class="alert alert-danger mb-3" role="alert">
+        <i class="bi bi-exclamation-triangle-fill me-2"></i>
+        {{ errorMessage }}
+      </div>
+
+      <!-- Success Message -->
+      <div *ngIf="successMessage" class="alert alert-success mb-3" role="alert">
+        <i class="bi bi-check-circle-fill me-2"></i>
+        {{ successMessage }}
+      </div>
+
       <!-- Register Button -->
       <button
         type="submit"
         class="btn btn-primary w-100 fw-semibold"
-        [disabled]="registerForm.invalid"
+        [disabled]="loading"
       >
-        Register
+        <span *ngIf="loading" class="spinner-border spinner-border-sm me-2" role="status" aria-hidden="true"></span>
+        {{ loading ? 'Creating Account...' : 'Register' }}
       </button>
 
       <!-- Login Redirect -->

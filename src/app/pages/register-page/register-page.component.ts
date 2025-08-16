@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { Router, RouterModule } from '@angular/router';
 import { AuthService, RegisterRequest } from '../../services/auth.service';
+import { ToastService } from '../../services/toast.service';
 
 @Component({
   selector: 'app-register-page',
@@ -22,10 +23,20 @@ export class RegisterPageComponent {
 
   constructor(
     private router: Router,
-    private authService: AuthService
+    private authService: AuthService,
+    private toastService: ToastService
   ) {}
 
   onRegister(): void {
+    console.log('onRegister() called');
+    console.log('Form values:', {
+      full_name: this.full_name,
+      email: this.email,
+      phone: this.phone,
+      password: this.password,
+      confirmPassword: this.confirmPassword
+    });
+    
     // Reset messages
     this.errorMessage = '';
     this.successMessage = '';
@@ -71,18 +82,32 @@ export class RegisterPageComponent {
     this.authService.register(registerRequest).subscribe({
       next: (response) => {
         console.log('Registration successful:', response);
-        this.successMessage = 'Registration successful! Please login to continue.';
         this.loading = false;
         
-        // Redirect to login after 2 seconds
+        // Show success toast
+        this.toastService.showSuccess(
+          'Registration Successful!', 
+          'Your account has been created successfully. You will be redirected to login.',
+          true,
+          3000
+        );
+        
+        // Navigate to login immediately
         setTimeout(() => {
           this.router.navigate(['/login']);
-        }, 2000);
+        }, 1500);
       },
       error: (error) => {
         console.error('Registration error:', error);
-        this.errorMessage = error.message || 'Registration failed. Please try again.';
         this.loading = false;
+        
+        // Show error toast
+        this.toastService.showError(
+          'Registration Failed',
+          error.message || 'Registration failed. Please try again.'
+        );
+        
+        this.errorMessage = error.message || 'Registration failed. Please try again.';
       }
     });
   }
